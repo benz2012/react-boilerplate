@@ -1,0 +1,10 @@
+## Directories
+node_modules
+public
+
+
+## Files
+._*
+*.log
+.DS_Store
+env

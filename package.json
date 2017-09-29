@@ -1,0 +1,15 @@
+{
+  "name": "APP_NAME",
+  "description": "APP_DESCRIPTION",
+  "version": "1.0.0",
+  "author": "Ben Zenker",
+  "license": "MIT",
+  "main": "index.js",
+  "repository": "REPOSITORY_URL",
+  "scripts": {
+    "start": "node server",
+    "webpack": "webpack --config ./internals/webpack.config.js -p",
+    "watch": "webpack --config ./internals/webpack.config.js --progress --colors --watch",
+    "lint": "eslint --ext .jsx,.js src/**; exit 0"
+  }
+}
