@@ -88,15 +88,11 @@ echo "COMPLETE: built and bundled code"
 # Commit all changes
 git add .
 git commit -m "initial setup"
-
-# Set the newly created remote repo to the origin and push
-git remote add origin https://github.com/$USERNAME/$REPONAME.git
-git push -u origin master
-echo "COMPLETE: project committed and pushed to GitHub"
+echo "COMPLETE: committed changes to git"
 
 # Initialize the Heroku project
 HEROKU_OUTPUT=$(heroku apps:create --buildpack https://github.com/heroku/heroku-buildpack-nodejs.git --no-remote)
-pattern="(https://[a-z0-9\-]+.herokuapp.com/)"
+pattern="(https://([a-z0-9\-]+).herokuapp.com/)"
 if [[ $HEROKU_OUTPUT =~ $pattern ]]
 then
   heroku_url="${BASH_REMATCH[0]}"
@@ -109,7 +105,7 @@ echo "COMPLETE: heroku app created"
 # Open newley created Heroku app, to the deployment page.
 # User action required: Setup GitHub deployment hooks
 echo "Opening heroku deployment page..."
-open https://dashboard.heroku.com/apps/$heroku_domain/deploy/github
+open "https://dashboard.heroku.com/apps/$heroku_domain/deploy/github"
 
 # User Interaction Dialougue
 echo "Have you setup the Heroku Github Deployment?"
@@ -119,6 +115,11 @@ if [ "$OK" != "y" ]; then
   echo "User cancelled"
   exit
 fi
+
+# Set the newly created remote repo to the origin and push
+git remote add origin https://github.com/$USERNAME/$REPONAME.git
+git push -u origin master
+echo "COMPLETE: Pushed to GitHub, master branch, triggering a deployment"
 
 # Open Heroku App default domain for newly created app.
 # Expected: App should be deployed and running
