@@ -1,6 +1,6 @@
-# APP NAME
+# APP_NAME
 
-**React Boilerplate:** A full-stack deployable boilerplate based in React. *Replace this with your application description.*
+APP_DESCRIPTION
 
 ## Table of Contents
 
@@ -12,34 +12,49 @@
 
 ## Prerequisites
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer.
+You will need to Download and Install [Node.js](https://nodejs.org/en/download/) v6.x.x or greater
 
 ## Installation
 
 Download or clone this project
 ```bash
-git clone https://github.com/benz2012/react-boilerplate.git
+git clone https://github.com/USERNAME/APP_NAME.git
 ```
 
 Install all the Javascript libraries used to build this web application
-```
+```bash
 npm install
-```
-
-Bundle (Build) the web application using *Webpack*
-```
-npm run webpack
 ```
 
 ## Usage
 
-Start the Node.js Express web server
+#### Production
+
+Bundle & Build the web application using *Webpack*
+```bash
+npm run build
 ```
+
+Run the Node/Express server in production mode
+```bash
 npm start
+```
+
+#### Development
+
+Run the Node/Express server in development mode
+```bash
+npm run dev
 ```
 
 Open a web browser and navigate to [localhost:8080](http://localhost:8080)
 
+#### Additional
+
+Lint the Javascript source
+```bash
+npm run lint
+```
 
 ## Resources
 
@@ -50,8 +65,8 @@ Open a web browser and navigate to [localhost:8080](http://localhost:8080)
 - Webpack with Babel
 
 ##### Maintainers
-- Ben Zenker - [benz2012](https://github.com/benz2012)
+- [USERNAME](https://github.com/USERNAME)
 
 ## Contributing
 
-Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/benz2012/react-boilerplate/compare).
+Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch, add commits, and [open a pull request](https://github.com/USERNAME/APP_NAME/compare).
