@@ -32,6 +32,11 @@ Download or clone this project, setting your app as the root
 git clone https://github.com/benz2012/react-boilerplate.git .
 ```
 
+Allow your shell the abilit to execute the setup script
+```bash
+chmod +x ./internals/start.sh
+```
+
 Establish the boilerplate as a standalone project. Requires user input. Read the [inline comments](internals/start.sh) for more details.
 ```bash
 ./internals/start.sh
