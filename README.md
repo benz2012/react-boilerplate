@@ -13,9 +13,9 @@ A personal & opinionated boilerplate, full-stack, based in React. Immediately re
 
 ## Prerequisites
 
-You will need to Download and Install [Node.js](https://nodejs.org/en/download/) v6.x.x or greater
-
-You will need both a [Github](https://github.com/join) and a [Heroku](https://signup.heroku.com/) account
+1. You will need to Download and Install [Node.js](https://nodejs.org/en/download/) v6.x.x or greater
+2. You will need both a [Github](https://github.com/join) and a [Heroku](https://signup.heroku.com/) account
+3. You will need to install the [Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
 
 ## Installation
 
