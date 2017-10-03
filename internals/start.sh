@@ -91,6 +91,7 @@ git commit -m "initial setup"
 printf "\nCOMPLETE: committed changes to git\n\n"
 
 # Initialize the Heroku project
+heroku login
 HEROKU_OUTPUT=$(heroku apps:create --buildpack https://github.com/heroku/heroku-buildpack-nodejs.git --no-remote)
 pattern="(https://([a-z0-9\-]+).herokuapp.com/)"
 if [[ $HEROKU_OUTPUT =~ $pattern ]]
@@ -123,10 +124,10 @@ fi
 # Set the newly created remote repo to the origin and push
 git remote add origin https://github.com/$USERNAME/$REPONAME.git
 git push -u origin master
-printf "\nCOMPLETE: Pushed to GitHub, master branch, triggering a deployment\n\n"
+printf "\nCOMPLETE: Pushed to GitHub, master branch, triggering a deployment\n"
 
 # Force the program to sleep while the app deploys
-printf "\n\n$REPONAME is being deployed."
+printf "\n$REPONAME is being deployed.\n"
 echo "Waiting 20 seconds for the Heroku build to *hopefully* finish..."
 sleep 10
 echo "10 more seconds..."
@@ -140,6 +141,6 @@ echo "Opening deployed app:"
 echo "$heroku_url"
 open $heroku_url
 
-echo "'./internals/start.sh' has completed all setup functions."
+printf "\n'./internals/start.sh' has completed all setup functions.\n"
 echo "Please delete this file immediatley."
 echo "It will break many things if you attempt to use it again."
