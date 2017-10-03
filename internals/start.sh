@@ -97,16 +97,17 @@ if [[ $HEROKU_OUTPUT =~ $pattern ]]
 then
   heroku_url="${BASH_REMATCH[0]}"
   heroku_domain="${BASH_REMATCH[2]}"
+  printf "\nCOMPLETE: heroku app created\n\n"
 else
   echo "ERROR: there was an issue creating the heroku app"
 fi
-printf "\nCOMPLETE: heroku app created\n\n"
 
 # Open newley created Heroku app, to the deployment page.
 # User action required: Setup GitHub deployment hooks
-echo "Opening heroku deployment page..."
-echo "ACTION ON PAGE:"
-echo "1. Scroll to bottom, and search for, then select $REPONAME"
+echo "Opening heroku deployment page:"
+echo "https://dashboard.heroku.com/apps/$heroku_domain/deploy/github"
+printf "\nACTION ON PAGE:\n"
+echo "1. Scroll to bottom, search for and then select $REPONAME"
 echo "2. Click 'Enable Automatic Deploys'"
 open "https://dashboard.heroku.com/apps/$heroku_domain/deploy/github"
 
@@ -135,7 +136,8 @@ sleep 5
 
 # Open Heroku App default domain for newly created app.
 # Expected: App should be deployed and running
-echo "Opening deployed app"
+echo "Opening deployed app:"
+echo "$heroku_url"
 open $heroku_url
 
 echo "'./internals/start.sh' has completed all setup functions."
