@@ -15,7 +15,7 @@ git commit -m "clean commit"
 git branch -D master #remove master
 git branch -m master #rename current branch to master
 git gc --aggressive --prune=all #clear old files
-echo "COMPLETE: Fresh git repository created"
+printf "\nCOMPLETE: Fresh git repository created\n\n"
 
 # Get current directory name
 CURRENTDIR=${PWD##*/}
@@ -54,7 +54,7 @@ fi
 
 # Create GitHub repo using the REST API
 curl -u $USERNAME https://api.github.com/user/repos -d "{\"name\": \"$REPONAME\", \"description\": \"${DESCRIPTION}\", \"private\": $PRIVATE_TF}"
-echo "COMPLETE: New GitHub repository created"
+printf "\nCOMPLETE: New GitHub repository created\n\n"
 
 # Replace README file with project specific README, update values
 cp -f "$PWD/internals/README.md" "$PWD/README.md"
@@ -75,20 +75,20 @@ sed -i "" -e "s/APP_DESCRIPTION/$DESCRIPTION/g" "$PWD/src/index.html"
 # Update App Root code with username
 sed -i "" -e "s/USERNAME/$USERNAME/g" "$PWD/src/js/containers/App.jsx"
 
-echo "COMPLETE: All files have been updated with the Application name, description, and username"
+printf "\nCOMPLETE: All files have been updated with the Application name, description, and username\n\n"
 
 # Install Javascript modules required for both development and production
 npm install
-echo "COMPLETE: installed node modules"
+printf "\nCOMPLETE: installed node modules\n\n"
 
 # Build & Bundle the Javascript and other assets into compresses static assets
 npm run build
-echo "COMPLETE: built and bundled code"
+printf "\nCOMPLETE: built and bundled code\n\n"
 
 # Commit all changes
 git add .
 git commit -m "initial setup"
-echo "COMPLETE: committed changes to git"
+printf "\nCOMPLETE: committed changes to git\n\n"
 
 # Initialize the Heroku project
 HEROKU_OUTPUT=$(heroku apps:create --buildpack https://github.com/heroku/heroku-buildpack-nodejs.git --no-remote)
@@ -100,11 +100,14 @@ then
 else
   echo "ERROR: there was an issue creating the heroku app"
 fi
-echo "COMPLETE: heroku app created"
+printf "\nCOMPLETE: heroku app created\n\n"
 
 # Open newley created Heroku app, to the deployment page.
 # User action required: Setup GitHub deployment hooks
 echo "Opening heroku deployment page..."
+echo "ACTION ON PAGE:"
+echo "1. Scroll to bottom, and search for, then select $REPONAME"
+echo "2. Click 'Enable Automatic Deploys'"
 open "https://dashboard.heroku.com/apps/$heroku_domain/deploy/github"
 
 # User Interaction Dialougue
@@ -119,7 +122,16 @@ fi
 # Set the newly created remote repo to the origin and push
 git remote add origin https://github.com/$USERNAME/$REPONAME.git
 git push -u origin master
-echo "COMPLETE: Pushed to GitHub, master branch, triggering a deployment"
+printf "\nCOMPLETE: Pushed to GitHub, master branch, triggering a deployment\n\n"
+
+# Force the program to sleep while the app deploys
+printf "\n\n$REPONAME is being deployed."
+echo "Waiting 20 seconds for the Heroku build to *hopefully* finish..."
+sleep 10
+echo "10 more seconds..."
+sleep 5
+echo "5 more seconds..."
+sleep 5
 
 # Open Heroku App default domain for newly created app.
 # Expected: App should be deployed and running

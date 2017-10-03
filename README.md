@@ -15,6 +15,8 @@ A personal & opinionated boilerplate, full-stack, based in React. Immediately re
 
 You will need to Download and Install [Node.js](https://nodejs.org/en/download/) v6.x.x or greater
 
+You will need both a [Github](https://github.com/join) and a [Heroku](https://signup.heroku.com/) account
+
 ## Installation
 
 Create your desired React app directory
