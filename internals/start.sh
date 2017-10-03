@@ -7,12 +7,14 @@
 # 4. Creates a new Heroku project, opens the deployment page
 
 # Setup New Git from exisiting repo
-git init
-git remote rm origin
-git checkout --orphan temp-branch
-git branch -D master
-git branch -m master
-git gc --aggressive --prune=all
+git init #initialize
+git remote rm origin #remove reference to boilerplate github
+git checkout --orphan temp-branch #switch to temporary branch
+git add -A
+git commit -m "clean commit"
+git branch -D master #remove master
+git branch -m master #rename current branch to master
+git gc --aggressive --prune=all #clear old files
 echo "COMPLETE: Fresh git repository created"
 
 # Get current directory name
@@ -54,14 +56,15 @@ fi
 curl -u $USERNAME https://api.github.com/user/repos -d "{\"name\": \"$REPONAME\", \"description\": \"${DESCRIPTION}\", \"private\": $PRIVATE_TF}"
 echo "COMPLETE: New GitHub repository created"
 
-# Replace README file with project specific README, update App Name
+# Replace README file with project specific README, update values
 cp -f "$PWD/internals/README.md" "$PWD/README.md"
 rm -rf "$PWD/internals/README.md"
 sed -i "" -e "s/USERNAME/$USERNAME/g" "$PWD/README.md"
 sed -i "" -e "s/APP_NAME/$REPONAME/g" "$PWD/README.md"
 sed -i "" -e "s/APP_DESCRIPTION/$DESCRIPTION/g" "$PWD/README.md"
 
-# Update Package.json with repo name and description
+# Update Package.json with repo username, name and description
+sed -i "" -e "s/USERNAME/$USERNAME/g" "$PWD/package.json"
 sed -i "" -e "s/APP_NAME/$REPONAME/g" "$PWD/package.json"
 sed -i "" -e "s/APP_DESCRIPTION/$DESCRIPTION/g" "$PWD/package.json"
 
@@ -76,7 +79,7 @@ echo "COMPLETE: All files have been updated with the Application name, descripti
 
 # Install Javascript modules required for both development and production
 npm install
-echo "COMPLETE: installed modules"
+echo "COMPLETE: installed node modules"
 
 # Build & Bundle the Javascript and other assets into compresses static assets
 npm run build
@@ -92,13 +95,21 @@ git push -u origin master
 echo "COMPLETE: project committed and pushed to GitHub"
 
 # Initialize the Heroku project
-heroku apps:create $REPONAME --buildpack https://github.com/heroku/heroku-buildpack-nodejs.git --no-remote
+HEROKU_OUTPUT=$(heroku apps:create --buildpack https://github.com/heroku/heroku-buildpack-nodejs.git --no-remote)
+pattern="(https://[a-z0-9\-]+.herokuapp.com/)"
+if [[ $HEROKU_OUTPUT =~ $pattern ]]
+then
+  heroku_url="${BASH_REMATCH[0]}"
+  heroku_domain="${BASH_REMATCH[2]}"
+else
+  echo "ERROR: there was an issue creating the heroku app"
+fi
 echo "COMPLETE: heroku app created"
 
 # Open newley created Heroku app, to the deployment page.
 # User action required: Setup GitHub deployment hooks
 echo "Opening heroku deployment page..."
-open https://dashboard.heroku.com/apps/$1/deploy/github
+open https://dashboard.heroku.com/apps/$heroku_domain/deploy/github
 
 # User Interaction Dialougue
 echo "Have you setup the Heroku Github Deployment?"
@@ -112,7 +123,7 @@ fi
 # Open Heroku App default domain for newly created app.
 # Expected: App should be deployed and running
 echo "Opening deployed app"
-open https://$REPONAME.herokuapp.com/
+open $heroku_url
 
 echo "'./internals/start.sh' has completed all setup functions."
 echo "Please delete this file immediatley."

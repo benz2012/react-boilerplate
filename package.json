@@ -2,10 +2,10 @@
   "name": "APP_NAME",
   "description": "APP_DESCRIPTION",
   "version": "1.0.0",
-  "author": "Ben Zenker",
+  "author": "USERNAME",
   "license": "MIT",
   "main": "index.js",
-  "repository": "REPOSITORY_URL",
+  "repository": "https://github.com/USERNAME/APP_NAME",
   "scripts": {
     "dev": "node server",
     "start": "NODE_ENV=production node server",
